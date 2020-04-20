@@ -4,9 +4,11 @@ import { getImages } from '../api/images-api'
 import { Card, Divider, Button } from 'semantic-ui-react'
 import { UdagramImage } from './UdagramImage'
 import { History } from 'history'
+import Auth from '../auth/Auth'
 
 interface ImagesListProps {
   history: History
+  auth: Auth
   match: {
     params: {
       boardId: string
@@ -32,7 +34,7 @@ export class ImagesList extends React.PureComponent<
 
   async componentDidMount() {
     try {
-      const images = await getImages(this.props.match.params.boardId)
+      const images = await getImages(this.props.match.params.boardId, this.props.auth.getIdToken())
       this.setState({
         images
       })

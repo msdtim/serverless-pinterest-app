@@ -92,7 +92,12 @@ export default class App extends Component<AppProps, AppState> {
           }}
         />
 
-        <Route path="/images/:boardId" exact component={ImagesList} />
+        <Route path="/images/:boardId" 
+          exact 
+          render={props => {
+            return <ImagesList {...props} auth={this.props.auth} />
+          }} />
+        />
 
         <Route
           path="/images/:boardId/create"
@@ -102,7 +107,10 @@ export default class App extends Component<AppProps, AppState> {
           }}
         />
 
-        <Route path="/" exact component={BoardsList} />
+        <Route path="/" exact           
+          render={props => {
+            return <BoardsList {...props} auth={this.props.auth} />
+          }} />
 
         <Route component={NotFound} />
       </Switch>

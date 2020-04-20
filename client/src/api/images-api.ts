@@ -3,9 +3,15 @@ import { ImageModel } from '../types/ImageModel'
 import { ImageUploadInfo } from '../types/ImageUploadInfo'
 import { ImageUploadResponse } from '../types/ImageUploadResponse'
 
-export async function getImages(boardId: string): Promise<ImageModel[]> {
+export async function getImages(boardId: string, idToken: string): Promise<ImageModel[]> {
   console.log('Fetching images')
-  const response = await fetch(`${apiEndpoint}/boards/${boardId}/images`)
+
+  const response = await fetch(`${apiEndpoint}/boards/${boardId}/images`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${idToken}`
+    },
+  })
   const result = await response.json()
 
   return result.items
