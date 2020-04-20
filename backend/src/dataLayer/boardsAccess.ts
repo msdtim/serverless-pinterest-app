@@ -16,10 +16,12 @@ export class BoardAccess {
 
   async getBoards(userId: string): Promise<Board[]> {
     console.log('Getting boards')
-
-    // TODO: query by userId
-    const result = await this.docClient.scan({
-      TableName: this.boardsTable
+    const result = await this.docClient.query({
+      TableName: this.boardsTable,
+      KeyConditionExpression: 'userId = :userId',
+      ExpressionAttributeValues: {
+        ':userId': userId
+      }
     }).promise()
 
     const items = result.Items

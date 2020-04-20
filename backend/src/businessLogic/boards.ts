@@ -8,7 +8,7 @@ import { getUserId } from '../auth/utils'
 const boardAccess = new BoardAccess()
 
 export async function getBoards(jwtToken: string): Promise<Board[]> {
-  const userId = getUserId(jwtToken)
+  const userId = 'user'//getUserId(jwtToken)
   return boardAccess.getBoards(userId)
 }
 
