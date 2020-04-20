@@ -29,3 +29,14 @@ export async function createBoard(
     timestamp: new Date().toISOString()
   })
 }
+
+export async function boardExists (
+  boardId: string,
+  jwtToken: string
+): Promise<boolean> {
+  const userId = 'user'//getUserId(jwtToken)
+  return await boardAccess.boardExists(
+    userId,
+    boardId
+  )
+}

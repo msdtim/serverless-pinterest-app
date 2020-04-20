@@ -28,6 +28,19 @@ export class BoardAccess {
     return items as Board[]
   }
 
+  async boardExists(userId: string, boardId: string): Promise<boolean> {
+    const params = {
+      TableName: this.boardsTable,
+      Key: {
+        id: boardId,
+        userId: userId
+      }
+    }
+    const result = await this.docClient.get(params).promise()
+
+    return !!result.Item
+  }
+
   async createBoard(board: Board): Promise<Board> {
     await this.docClient.put({
       TableName: this.boardsTable,
