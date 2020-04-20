@@ -16,6 +16,20 @@ export async function getBoards(idToken: string): Promise<BoardModel[]> {
   return result.items
 }
 
+export async function getBoard(boardId: string, idToken: string): Promise<BoardModel> {
+  console.log('Fetching boards')
+
+  const response = await fetch(`${apiEndpoint}/boards/${boardId}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${idToken}`
+    },
+  })
+  const result = await response.json()
+
+  return result.items[0]
+}
+
 export async function createBoard(
   idToken: string,
   newBoard: BoardUploadInfo
