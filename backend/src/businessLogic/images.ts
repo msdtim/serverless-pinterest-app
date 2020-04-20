@@ -31,3 +31,8 @@ export async function createImage(
 export function getUploadUrl(imageId: string) {
   return imagesAccess.getUploadUrl(imageId)
 }
+
+
+export async function getImages(boardId: string): Promise<Image[]> {
+  return imagesAccess.getImages(boardId)
+}

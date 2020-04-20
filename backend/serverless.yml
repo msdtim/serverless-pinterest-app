@@ -83,7 +83,7 @@ functions:
           method: post
           path: boards/{boardId}/images
           cors: true
-          # authorizer: RS256Auth
+          # authorizer: Auth
           # request:
           #   # Schema that will be used to validate incoming requests
           #   schema:
@@ -107,7 +107,29 @@ functions:
         Action:
           - s3:PutObject
         Resource: arn:aws:s3:::${self:provider.environment.IMAGES_S3_BUCKET}/*
-
+  GetImages:
+    handler: src/lambda/http/getImages.handler
+    events:
+      - http:
+          method: get
+          path: boards/{boardId}/images
+          cors: true
+          # authorizer: Auth
+    iamRoleStatements:
+      - Effect: "Allow" # xray permissions (required)
+        Action:
+          - "xray:PutTraceSegments"
+          - "xray:PutTelemetryRecords"
+        Resource:
+          - "*"
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.IMAGES_TABLE}
+      - Effect: Allow
+        Action:
+          - dynamodb:GetItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.BOARDS_TABLE}
 
 resources:
   Resources:

@@ -35,6 +35,19 @@ export class ImagesAccess {
     })
   }
 
+  async getImages(boardId: string): Promise<Image[]> {
+  
+    const result = await this.docClient.query({
+      TableName: this.imagesTable,
+      KeyConditionExpression: 'boardId = :boardId',
+      ExpressionAttributeValues: {
+        ':boardId': boardId
+      }
+    }).promise()
+    const items = result.Items
+    return items as Image[]
+  }
+
 }
 
 function createDynamoDBClient() {
