@@ -1,5 +1,5 @@
 export interface ImageModel {
-  groupId: string
+  boardId: string
   timestamp: string
   title: string
   imageId: string

@@ -1,4 +1,4 @@
-export interface GroupModel {
+export interface BoardModel {
   id: string
   name: string
   description: string

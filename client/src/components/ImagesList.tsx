@@ -9,7 +9,7 @@ interface ImagesListProps {
   history: History
   match: {
     params: {
-      groupId: string
+      boardId: string
     }
   }
 }
@@ -27,17 +27,17 @@ export class ImagesList extends React.PureComponent<
   }
 
   handleCreateImage = () => {
-    this.props.history.push(`/images/${this.props.match.params.groupId}/create`)
+    this.props.history.push(`/images/${this.props.match.params.boardId}/create`)
   }
 
   async componentDidMount() {
     try {
-      const images = await getImages(this.props.match.params.groupId)
+      const images = await getImages(this.props.match.params.boardId)
       this.setState({
         images
       })
     } catch (e) {
-      alert(`Failed to fetch images for group : ${e.message}`)
+      alert(`Failed to fetch images for board : ${e.message}`)
     }
   }
 

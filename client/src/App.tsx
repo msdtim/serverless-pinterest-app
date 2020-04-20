@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { GroupsList } from './components/GroupsList'
+import { BoardsList } from './components/BoardsList'
 import { Router, Link, Route, Switch } from 'react-router-dom'
 import { Grid, Menu, Segment } from 'semantic-ui-react'
 import { ImagesList } from './components/ImagesList'
 import { NotFound } from './components/NotFound'
 import { CreateImage } from './components/CreateImage'
-import { CreateGroup } from './components/CreateGroup'
+import { CreateBoard } from './components/CreateBoard'
 import Auth from './auth/Auth'
 
 export interface AppProps {}
@@ -85,24 +85,24 @@ export default class App extends Component<AppProps, AppState> {
     return (
       <Switch>
         <Route
-          path="/groups/create"
+          path="/boards/create"
           exact
           render={props => {
-            return <CreateGroup {...props} auth={this.props.auth} />
+            return <CreateBoard {...props} auth={this.props.auth} />
           }}
         />
 
-        <Route path="/images/:groupId" exact component={ImagesList} />
+        <Route path="/images/:boardId" exact component={ImagesList} />
 
         <Route
-          path="/images/:groupId/create"
+          path="/images/:boardId/create"
           exact
           render={props => {
             return <CreateImage {...props} auth={this.props.auth} />
           }}
         />
 
-        <Route path="/" exact component={GroupsList} />
+        <Route path="/" exact component={BoardsList} />
 
         <Route component={NotFound} />
       </Switch>
