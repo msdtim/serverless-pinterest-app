@@ -1,26 +1,26 @@
 import * as React from 'react'
 import { Form, Button } from 'semantic-ui-react'
-import { createGroup } from '../api/groups-api'
+import { createBoard } from '../api/boards-api'
 import Auth from '../auth/Auth'
 
-interface CreateGroupProps {
+interface CreateBoardProps {
   auth: Auth
 }
 
-interface CreateGroupState {
+interface CreateBoardState {
   name: string
   description: string
-  uploadingGroup: boolean
+  uploadingBoard: boolean
 }
 
-export class CreateGroup extends React.PureComponent<
-  CreateGroupProps,
-  CreateGroupState
+export class CreateBoard extends React.PureComponent<
+  CreateBoardProps,
+  CreateBoardState
 > {
-  state: CreateGroupState = {
+  state: CreateBoardState = {
     name: '',
     description: '',
-    uploadingGroup: false
+    uploadingBoard: false
   }
 
   handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,14 +41,14 @@ export class CreateGroup extends React.PureComponent<
       }
 
       this.setUploadState(true)
-      const group = await createGroup(this.props.auth.getIdToken(), {
+      const board = await createBoard(this.props.auth.getIdToken(), {
         name: this.state.name,
         description: this.state.description
       })
 
-      console.log('Created description', group)
+      console.log('Created description', board)
 
-      alert('Group was created!')
+      alert('Board was created!')
     } catch (e) {
       alert('Could not upload an image: ' + e.message)
     } finally {
@@ -56,22 +56,22 @@ export class CreateGroup extends React.PureComponent<
     }
   }
 
-  setUploadState(uploadingGroup: boolean) {
+  setUploadState(uploadingBoard: boolean) {
     this.setState({
-      uploadingGroup
+      uploadingBoard
     })
   }
 
   render() {
     return (
       <div>
-        <h1>Upload new group</h1>
+        <h1>Upload new board</h1>
 
         <Form onSubmit={this.handleSubmit}>
           <Form.Field>
             <label>Name</label>
             <input
-              placeholder="Group name"
+              placeholder="Board name"
               value={this.state.name}
               onChange={this.handleNameChange}
             />
@@ -79,7 +79,7 @@ export class CreateGroup extends React.PureComponent<
           <Form.Field>
             <label>Description</label>
             <input
-              placeholder="Group description"
+              placeholder="Board description"
               value={this.state.description}
               onChange={this.handleDescriptionChange}
             />
@@ -92,7 +92,7 @@ export class CreateGroup extends React.PureComponent<
 
   renderButton() {
     return (
-      <Button loading={this.state.uploadingGroup} type="submit">
+      <Button loading={this.state.uploadingBoard} type="submit">
         Create
       </Button>
     )

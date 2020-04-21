@@ -1,7 +1,8 @@
-export interface ImageModel {
+export interface Image {
   boardId: string
+  userId: string
   timestamp: string
-  title: string
   imageId: string
+  title: string
   imageUrl: string
 }

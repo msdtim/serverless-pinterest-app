@@ -12,7 +12,7 @@ enum UploadState {
 interface CreateImageProps {
   match: {
     params: {
-      groupId: string
+      boardId: string
     }
   }
   auth: Auth
@@ -59,7 +59,7 @@ export class CreateImage extends React.PureComponent<
 
       this.setUploadState(UploadState.UploadingData)
       const uploadInfo = await createImage(this.props.auth.getIdToken(), {
-        groupId: this.props.match.params.groupId,
+        boardId: this.props.match.params.boardId,
         title: this.state.title
       })
 
