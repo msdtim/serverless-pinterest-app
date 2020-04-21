@@ -41,7 +41,7 @@ export class ImagesList extends React.PureComponent<
         images: this.state.images.filter(image => image.imageId != imageId)
       })
     } catch {
-      alert('Todo deletion failed')
+      alert('Image deletion failed')
     }
   }
 

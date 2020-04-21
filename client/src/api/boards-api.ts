@@ -50,3 +50,15 @@ export async function createBoard(
   const result = await reply.json()
   return result.newItem
 }
+
+export async function deleteBoard(boardId: string, idToken: string): Promise<void> {
+  console.log('Deleting board')
+
+  await fetch(`${apiEndpoint}/boards/${boardId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${idToken}`
+    },
+  })
+}
