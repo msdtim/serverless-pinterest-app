@@ -73,6 +73,15 @@ export class ImagesAccess {
     }
     await this.docClient.delete(params).promise()
   }
+
+  async getAllImages(): Promise<Image[]> {
+  
+    const result = await this.docClient.scan({
+      TableName: this.imagesTable,
+    }).promise()
+    const items = result.Items
+    return items as Image[]
+  }
 }
 
 function createDynamoDBClient() {

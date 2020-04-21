@@ -132,6 +132,26 @@ functions:
           - dynamodb:GetItem
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.BOARDS_TABLE}
 
+  GetAllImages:
+    handler: src/lambda/http/getAllImages.handler
+    events:
+      - http:
+          method: get
+          path: /images
+          cors: true
+          # authorizer: Auth
+    iamRoleStatements:
+      - Effect: "Allow" # xray permissions (required)
+        Action:
+          - "xray:PutTraceSegments"
+          - "xray:PutTelemetryRecords"
+        Resource:
+          - "*"
+      - Effect: Allow
+        Action:
+          - dynamodb:Scan
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.IMAGES_TABLE}
+        
   GetBoard:
     handler: src/lambda/http/getBoard.handler
     events:

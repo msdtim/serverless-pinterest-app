@@ -44,3 +44,7 @@ export async function getImage(imageId: string): Promise<Image> {
 export async function deleteImage(image: Image) {
   return imagesAccess.deleteImage(image)
 }
+
+export async function getAllImages(): Promise<Image[]> {
+  return imagesAccess.getAllImages()
+}

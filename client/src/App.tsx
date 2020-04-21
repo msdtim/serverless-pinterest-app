@@ -1,21 +1,21 @@
 import React, { Component } from 'react'
 import { BoardsList } from './components/BoardsList'
 import { Router, Link, Route, Switch } from 'react-router-dom'
-import { Grid, Menu, Segment } from 'semantic-ui-react'
+import { Grid, Menu, Segment, Input } from 'semantic-ui-react'
 import { ImagesList } from './components/ImagesList'
 import { NotFound } from './components/NotFound'
 import { CreateImage } from './components/CreateImage'
 import { CreateBoard } from './components/CreateBoard'
 import Auth from './auth/Auth'
-
-export interface AppProps {}
+import { ImagesDiscover } from './components/ImagesDiscover'
 
 export interface AppProps {
   auth: Auth
   history: any
 }
 
-export interface AppState {}
+export interface AppState {
+}
 
 export default class App extends Component<AppProps, AppState> {
   constructor(props: AppProps) {
@@ -57,9 +57,14 @@ export default class App extends Component<AppProps, AppState> {
     return (
       <Menu>
         <Menu.Item name="home">
-          <Link to="/">Home</Link>
+          <Link to="/">My Boards</Link>
         </Menu.Item>
-
+        <Menu.Item name="myPins">
+          <Link to="/">My Pins</Link>
+        </Menu.Item>
+        <Menu.Item name="discover">
+          <Link to="/images">Discover</Link>
+        </Menu.Item>
         <Menu.Menu position="right">{this.logInLogOutButton()}</Menu.Menu>
       </Menu>
     )
@@ -96,6 +101,13 @@ export default class App extends Component<AppProps, AppState> {
           exact 
           render={props => {
             return <ImagesList {...props} auth={this.props.auth} />
+          }} />
+        />
+
+        <Route path="/images" 
+          exact 
+          render={props => {
+            return <ImagesDiscover {...props} auth={this.props.auth} />
           }} />
         />
 

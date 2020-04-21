@@ -49,7 +49,7 @@ export class BoardsList extends React.PureComponent<BoardsListProps, BoardsListS
   render() {
     return (
       <div>
-        <h1>Boards</h1>
+        <h1>My Boards</h1>
 
         <Button
           primary

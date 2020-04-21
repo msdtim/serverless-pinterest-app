@@ -17,6 +17,20 @@ export async function getImages(boardId: string, idToken: string): Promise<Image
   return result.items
 }
 
+export async function getAllImages(idToken: string): Promise<ImageModel[]> {
+  console.log('Fetching all images')
+
+  const response = await fetch(`${apiEndpoint}/images`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${idToken}`
+    },
+  })
+  const result = await response.json()
+
+  return result.items
+}
+
 export async function createImage(
   idToken: string,
   newImage: ImageUploadInfo
