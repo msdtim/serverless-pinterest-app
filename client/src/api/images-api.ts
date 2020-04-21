@@ -71,3 +71,17 @@ export async function deleteImage(imageId: string, idToken: string): Promise<voi
     },
   })
 }
+
+export async function pinImage(imageId: string, idToken: string): Promise<ImageUploadResponse> {
+  console.log('Pinning image')
+
+  const reply = await fetch(`${apiEndpoint}/images/${imageId}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${idToken}`
+    },
+  })
+
+  return await reply.json()
+}

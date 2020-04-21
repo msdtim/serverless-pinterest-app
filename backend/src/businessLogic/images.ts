@@ -48,3 +48,18 @@ export async function deleteImage(image: Image) {
 export async function getAllImages(): Promise<Image[]> {
   return imagesAccess.getAllImages()
 }
+
+export async function pinImage(image: Image, jwtToken: string): Promise<Image> {
+  const userId = 'user'//getUserId(jwtToken)
+  const imageId = uuid.v4()
+
+  return imagesAccess.createImage({
+    boardId: userId,
+    userId: image.userId,
+    timestamp: new Date().toISOString(),
+    imageId: imageId,
+    title: image.title,
+    imageUrl: image.imageUrl,
+    isPin: true
+  })
+}

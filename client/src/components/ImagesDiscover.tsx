@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { ImageModel } from '../types/ImageModel'
-import { getAllImages } from '../api/images-api'
+import { getAllImages, pinImage } from '../api/images-api'
 import { Card, Divider, Button, Icon, Image } from 'semantic-ui-react'
 import { History } from 'history'
 import Auth from '../auth/Auth'
@@ -31,10 +31,23 @@ export class ImagesDiscover extends React.PureComponent<
     try {
       const images = await getAllImages(this.props.auth.getIdToken())
       this.setState({
-        images
+        images: images.filter(image => image.isPin != true)
       })
     } catch (e) {
       alert(`Failed to fetch images for board : ${e.message}`)
+    }
+  }
+
+  onImagePin = async (imageId: string) => {
+    try {
+      const replyInfo = await pinImage(imageId, this.props.auth.getIdToken())
+      console.log('Pinned image', replyInfo)
+      
+      this.setState({
+        images: this.state.images.filter(image => image.imageId != imageId)
+      })
+    } catch {
+      alert('Pin image failed')
     }
   }
 
@@ -54,7 +67,7 @@ export class ImagesDiscover extends React.PureComponent<
                       icon
                       color="red"
                       size="small"
-                      // onClick={() => this.onPinImage(image.imageId)}
+                      onClick={() => this.onImagePin(image.imageId)}
                       floated="right"
                     >
                       <Icon name="pin" />
