@@ -65,7 +65,7 @@ export class ImagesList extends React.PureComponent<
 
         <Divider clearing />
 
-        <Card.Group>
+        <Card.Group itemsPerRow={3}>
           {this.state.images.map(image => {
             return <UdagramImage key={image.imageId} image={image} />
           })}
