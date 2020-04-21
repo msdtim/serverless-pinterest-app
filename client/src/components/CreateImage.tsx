@@ -2,6 +2,8 @@ import * as React from 'react'
 import { Form, Button } from 'semantic-ui-react'
 import { createImage, uploadFile } from '../api/images-api'
 import Auth from '../auth/Auth'
+import { Redirect } from 'react-router-dom'
+import { runInThisContext } from 'vm'
 
 enum UploadState {
   NoUpload,
@@ -22,6 +24,7 @@ interface CreateImageState {
   title: string
   file: any
   uploadState: UploadState
+  redirect: boolean
 }
 
 export class CreateImage extends React.PureComponent<
@@ -31,7 +34,8 @@ export class CreateImage extends React.PureComponent<
   state: CreateImageState = {
     title: '',
     file: undefined,
-    uploadState: UploadState.NoUpload
+    uploadState: UploadState.NoUpload,
+    redirect: false
   }
 
   handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,6 +73,7 @@ export class CreateImage extends React.PureComponent<
       await uploadFile(uploadInfo.uploadUrl, this.state.file)
 
       alert('Image was uploaded!')
+      this.setRedirect(true)
     } catch (e) {
       alert('Could not upload an image: ' + e.message)
     } finally {
@@ -82,9 +87,22 @@ export class CreateImage extends React.PureComponent<
     })
   }
 
+  setRedirect(redirect: boolean) {
+    this.setState({
+      redirect: true
+    })
+  }
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to={`/images/${this.props.match.params.boardId}`} />
+    }
+  }
+
   render() {
     return (
       <div>
+        {this.renderRedirect()}
         <h1>Upload new image</h1>
 
         <Form onSubmit={this.handleSubmit}>

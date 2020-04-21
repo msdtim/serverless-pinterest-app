@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Form, Button } from 'semantic-ui-react'
 import { createBoard } from '../api/boards-api'
+import { Redirect } from 'react-router-dom'
 import Auth from '../auth/Auth'
 
 interface CreateBoardProps {
@@ -11,6 +12,7 @@ interface CreateBoardState {
   name: string
   description: string
   uploadingBoard: boolean
+  redirect: boolean
 }
 
 export class CreateBoard extends React.PureComponent<
@@ -20,7 +22,8 @@ export class CreateBoard extends React.PureComponent<
   state: CreateBoardState = {
     name: '',
     description: '',
-    uploadingBoard: false
+    uploadingBoard: false,
+    redirect: false
   }
 
   handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,6 +52,7 @@ export class CreateBoard extends React.PureComponent<
       console.log('Created description', board)
 
       alert('Board was created!')
+      this.setRedirect(true)
     } catch (e) {
       alert('Could not upload an image: ' + e.message)
     } finally {
@@ -62,9 +66,22 @@ export class CreateBoard extends React.PureComponent<
     })
   }
 
+  setRedirect(redirect: boolean) {
+    this.setState({
+      redirect: true
+    })
+  }
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to='/' />
+    }
+  }
+
   render() {
     return (
       <div>
+        {this.renderRedirect()}
         <h1>Upload new board</h1>
 
         <Form onSubmit={this.handleSubmit}>
