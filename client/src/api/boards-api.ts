@@ -26,8 +26,9 @@ export async function getBoard(boardId: string, idToken: string): Promise<BoardM
     },
   })
   const result = await response.json()
+  console.log(JSON.stringify(result))
 
-  return result.items[0]
+  return result.board
 }
 
 export async function createBoard(

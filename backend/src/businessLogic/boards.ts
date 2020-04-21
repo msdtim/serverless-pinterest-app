@@ -40,3 +40,14 @@ export async function boardExists (
     boardId
   )
 }
+
+export async function getBoard (
+  boardId: string,
+  jwtToken: string
+): Promise<Board> {
+  const userId = 'user'//getUserId(jwtToken)
+  return await boardAccess.getBoard(
+    userId,
+    boardId
+  )
+}

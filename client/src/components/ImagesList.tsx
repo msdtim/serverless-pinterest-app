@@ -52,7 +52,7 @@ export class ImagesList extends React.PureComponent<
   render() {
     return (
       <div>
-        <h1>{this.state.boardName}}</h1>
+        <h1>{this.state.boardName}</h1>
 
         <Button
           primary
