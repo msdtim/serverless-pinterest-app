@@ -43,7 +43,7 @@ export default class App extends Component<AppProps, AppState> {
               <Grid.Column width={16}>
                 <Router history={this.props.history}>
                   {this.generateMenu()}
-
+                  
                   {this.generateCurrentPage()}
                 </Router>
               </Grid.Column>
@@ -88,6 +88,11 @@ export default class App extends Component<AppProps, AppState> {
   }
 
   generateCurrentPage() {
+    if (!this.props.auth.isAuthenticated()) {
+      return <div><h1>Welcome to Serverless Pinterest App!</h1>
+      <h2>Please login to use the App</h2>
+      </div>
+    }
     return (
       <Switch>
         <Route

@@ -39,8 +39,7 @@ export async function createBoard(
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      // 'Authorization': `Bearer ${idToken}`
-      'Authorization': `Bearer 123`
+      'Authorization': `Bearer ${idToken}`
     },
     body: JSON.stringify({
       name: newBoard.name,
