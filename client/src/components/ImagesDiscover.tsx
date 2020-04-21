@@ -43,9 +43,7 @@ export class ImagesDiscover extends React.PureComponent<
       const replyInfo = await pinImage(imageId, this.props.auth.getIdToken())
       console.log('Pinned image', replyInfo)
       
-      this.setState({
-        images: this.state.images.filter(image => image.imageId != imageId)
-      })
+      alert('Saved to My Pins!')
     } catch {
       alert('Pin image failed')
     }

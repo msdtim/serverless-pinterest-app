@@ -35,6 +35,9 @@ provider:
     IMAGE_ID_INDEX: ImageIdIndex
 
 functions:
+  Auth:
+    handler: src/lambda/auth/auth0Authorizer.handler
+
   CreateBoard:
     handler: src/lambda/http/createBoard.handler
     events:
@@ -42,7 +45,7 @@ functions:
           method: post
           path: boards
           cors: true
-          # authorizer: Auth
+          authorizer: Auth
           # request:
           #   # Schema that will be used to validate incoming requests
           #   schema:
@@ -65,7 +68,7 @@ functions:
           method: get
           path: boards
           cors: true
-          # authorizer: Auth
+          authorizer: Auth
     iamRoleStatements:
       - Effect: "Allow" # xray permissions (required)
         Action:
@@ -84,7 +87,7 @@ functions:
           method: post
           path: boards/{boardId}/images
           cors: true
-          # authorizer: Auth
+          authorizer: Auth
           # request:
           #   # Schema that will be used to validate incoming requests
           #   schema:
@@ -115,7 +118,7 @@ functions:
           method: get
           path: boards/{boardId}/images
           cors: true
-          # authorizer: Auth
+          authorizer: Auth
     iamRoleStatements:
       - Effect: "Allow" # xray permissions (required)
         Action:
@@ -138,7 +141,7 @@ functions:
           method: get
           path: /pins
           cors: true
-          # authorizer: Auth
+          authorizer: Auth
     iamRoleStatements:
       - Effect: "Allow" # xray permissions (required)
         Action:
@@ -158,7 +161,7 @@ functions:
           method: get
           path: /images
           cors: true
-          # authorizer: Auth
+          authorizer: Auth
     iamRoleStatements:
       - Effect: "Allow" # xray permissions (required)
         Action:
@@ -178,7 +181,7 @@ functions:
           method: get
           path: boards/{boardId}
           cors: true
-          # authorizer: Auth
+          authorizer: Auth
     iamRoleStatements:
       - Effect: "Allow" # xray permissions (required)
         Action:
@@ -198,7 +201,7 @@ functions:
           method: delete
           path: images/{imageId}
           cors: true
-          # authorizer: Auth
+          authorizer: Auth
     iamRoleStatements:
       - Effect: "Allow" # xray permissions (required)
         Action:
@@ -221,7 +224,7 @@ functions:
           method: delete
           path: boards/{boardId}
           cors: true
-          # authorizer: Auth
+          authorizer: Auth
     iamRoleStatements:
       - Effect: "Allow" # xray permissions (required)
         Action:
@@ -245,7 +248,7 @@ functions:
           method: post
           path: images/{imageId}
           cors: true
-          # authorizer: Auth
+          authorizer: Auth
     iamRoleStatements:
       - Effect: "Allow" # xray permissions (required)
         Action:

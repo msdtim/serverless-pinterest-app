@@ -7,9 +7,6 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult, APIGatewayProxyHandler } f
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
 
   console.log('Caller event', event)
-  const authorization = event.headers.Authorization
-  const split = authorization.split(' ')
-  const jwtToken = split[1]
 
   const images = await getAllImages()
 
