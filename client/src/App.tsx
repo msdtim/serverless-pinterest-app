@@ -8,6 +8,7 @@ import { CreateImage } from './components/CreateImage'
 import { CreateBoard } from './components/CreateBoard'
 import Auth from './auth/Auth'
 import { ImagesDiscover } from './components/ImagesDiscover'
+import { ImagesPins } from './components/ImagesPins'
 
 export interface AppProps {
   auth: Auth
@@ -60,7 +61,7 @@ export default class App extends Component<AppProps, AppState> {
           <Link to="/">My Boards</Link>
         </Menu.Item>
         <Menu.Item name="myPins">
-          <Link to="/">My Pins</Link>
+          <Link to="/pins">My Pins</Link>
         </Menu.Item>
         <Menu.Item name="discover">
           <Link to="/images">Discover</Link>
@@ -108,6 +109,13 @@ export default class App extends Component<AppProps, AppState> {
           exact 
           render={props => {
             return <ImagesDiscover {...props} auth={this.props.auth} />
+          }} />
+        />
+
+        <Route path="/pins" 
+          exact 
+          render={props => {
+            return <ImagesPins {...props} auth={this.props.auth} />
           }} />
         />
 

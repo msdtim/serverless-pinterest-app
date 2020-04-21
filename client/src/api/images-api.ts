@@ -85,3 +85,17 @@ export async function pinImage(imageId: string, idToken: string): Promise<ImageU
 
   return await reply.json()
 }
+
+export async function getPins(idToken: string): Promise<ImageModel[]> {
+  console.log('Fetching pins')
+
+  const response = await fetch(`${apiEndpoint}/pins`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${idToken}`
+    },
+  })
+  const result = await response.json()
+
+  return result.items
+}
