@@ -1,12 +1,10 @@
 import * as React from 'react'
 import { ImageModel } from '../types/ImageModel'
-import { getImages } from '../api/images-api'
+import { getImages, deleteImage } from '../api/images-api'
 import { getBoard } from '../api/boards-api'
-import { Card, Divider, Button } from 'semantic-ui-react'
-import { UdagramImage } from './UdagramImage'
+import { Card, Divider, Button, Icon, Image } from 'semantic-ui-react'
 import { History } from 'history'
 import Auth from '../auth/Auth'
-import { BoardModel } from '../types/BoardModel'
 
 interface ImagesListProps {
   history: History
@@ -34,6 +32,17 @@ export class ImagesList extends React.PureComponent<
 
   handleCreateImage = () => {
     this.props.history.push(`/images/${this.props.match.params.boardId}/create`)
+  }
+
+  onImageDelete = async (imageId: string) => {
+    try {
+      await deleteImage(imageId, this.props.auth.getIdToken())
+      this.setState({
+        images: this.state.images.filter(image => image.imageId != imageId)
+      })
+    } catch {
+      alert('Todo deletion failed')
+    }
   }
 
   async componentDidMount() {
@@ -67,7 +76,25 @@ export class ImagesList extends React.PureComponent<
 
         <Card.Group itemsPerRow={3}>
           {this.state.images.map(image => {
-            return <UdagramImage key={image.imageId} image={image} />
+            return       <Card fluid color="blue" key={image.imageId}>
+            <Card.Content>
+              <Card.Header>{image.title}
+                <Button
+                      icon
+                      color="red"
+                      size="small"
+                      onClick={() => this.onImageDelete(image.imageId)}
+                      floated="right"
+                    >
+                      <Icon name="delete" />
+                </Button>
+              </Card.Header>
+              <Card.Description>{image.timestamp}</Card.Description>
+              {image.imageUrl && (
+                <Image src={image.imageUrl} />
+              )}
+            </Card.Content>
+          </Card>
           })}
         </Card.Group>
       </div>
