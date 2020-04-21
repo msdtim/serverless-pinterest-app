@@ -51,3 +51,14 @@ export async function getBoard (
     boardId
   )
 }
+
+export async function deleteBoard (
+  boardId: string,
+  jwtToken: string
+): Promise<void> {
+  const userId = 'user'//getUserId(jwtToken)
+  await boardAccess.deleteBoard(
+    userId,
+    boardId
+  )
+}

@@ -63,6 +63,16 @@ export class BoardAccess {
 
     return board
   }
+
+  async deleteBoard(userId: string, boardId: string): Promise<void> {
+    await this.docClient.delete({
+      TableName : this.boardsTable,
+      Key: {
+        id: boardId,
+        userId: userId
+      }
+    }).promise()
+  }
 }
 
 function createDynamoDBClient() {
