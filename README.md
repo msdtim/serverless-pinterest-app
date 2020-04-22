@@ -18,7 +18,7 @@ Greeting page for new users:
 
 ### Content Ownership
 
-My Boards page stores user created data. User can upload images to different boards. User can delete individual image or a board along with the images belong to this board.
+My Boards page stores user created data. User can create boards, upload images to different boards. User can delete individual image or a board along with the images belong to this board.
 
 ### Content Discovery
 
