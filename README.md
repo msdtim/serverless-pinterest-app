@@ -16,6 +16,8 @@ User need to login and properly authenticated to access the content of this appl
 
 Greeting page for new users:
 
+![Alt text](images/Greeting Page.png?raw=true "Image 1")
+
 ### Content Ownership
 
 My Boards page stores user created data. User can create boards, upload images to different boards. User can delete individual image or a board along with the images belong to this board.
