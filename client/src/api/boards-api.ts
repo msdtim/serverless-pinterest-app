@@ -39,8 +39,7 @@ export async function createBoard(
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      // 'Authorization': `Bearer ${idToken}`
-      'Authorization': `Bearer 123`
+      'Authorization': `Bearer ${idToken}`
     },
     body: JSON.stringify({
       name: newBoard.name,
@@ -49,4 +48,16 @@ export async function createBoard(
   })
   const result = await reply.json()
   return result.newItem
+}
+
+export async function deleteBoard(boardId: string, idToken: string): Promise<void> {
+  console.log('Deleting board')
+
+  await fetch(`${apiEndpoint}/boards/${boardId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${idToken}`
+    },
+  })
 }

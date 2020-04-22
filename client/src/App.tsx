@@ -1,21 +1,22 @@
 import React, { Component } from 'react'
 import { BoardsList } from './components/BoardsList'
 import { Router, Link, Route, Switch } from 'react-router-dom'
-import { Grid, Menu, Segment } from 'semantic-ui-react'
+import { Grid, Menu, Segment, Input } from 'semantic-ui-react'
 import { ImagesList } from './components/ImagesList'
 import { NotFound } from './components/NotFound'
 import { CreateImage } from './components/CreateImage'
 import { CreateBoard } from './components/CreateBoard'
 import Auth from './auth/Auth'
-
-export interface AppProps {}
+import { ImagesDiscover } from './components/ImagesDiscover'
+import { ImagesPins } from './components/ImagesPins'
 
 export interface AppProps {
   auth: Auth
   history: any
 }
 
-export interface AppState {}
+export interface AppState {
+}
 
 export default class App extends Component<AppProps, AppState> {
   constructor(props: AppProps) {
@@ -42,7 +43,7 @@ export default class App extends Component<AppProps, AppState> {
               <Grid.Column width={16}>
                 <Router history={this.props.history}>
                   {this.generateMenu()}
-
+                  
                   {this.generateCurrentPage()}
                 </Router>
               </Grid.Column>
@@ -57,9 +58,14 @@ export default class App extends Component<AppProps, AppState> {
     return (
       <Menu>
         <Menu.Item name="home">
-          <Link to="/">Home</Link>
+          <Link to="/">My Boards</Link>
         </Menu.Item>
-
+        <Menu.Item name="myPins">
+          <Link to="/pins">My Pins</Link>
+        </Menu.Item>
+        <Menu.Item name="discover">
+          <Link to="/images">Discover</Link>
+        </Menu.Item>
         <Menu.Menu position="right">{this.logInLogOutButton()}</Menu.Menu>
       </Menu>
     )
@@ -82,6 +88,11 @@ export default class App extends Component<AppProps, AppState> {
   }
 
   generateCurrentPage() {
+    if (!this.props.auth.isAuthenticated()) {
+      return <div><h1>Welcome to Serverless Pinterest App!</h1>
+      <h2>Please login to use the App</h2>
+      </div>
+    }
     return (
       <Switch>
         <Route
@@ -96,6 +107,20 @@ export default class App extends Component<AppProps, AppState> {
           exact 
           render={props => {
             return <ImagesList {...props} auth={this.props.auth} />
+          }} />
+        />
+
+        <Route path="/images" 
+          exact 
+          render={props => {
+            return <ImagesDiscover {...props} auth={this.props.auth} />
+          }} />
+        />
+
+        <Route path="/pins" 
+          exact 
+          render={props => {
+            return <ImagesPins {...props} auth={this.props.auth} />
           }} />
         />
 

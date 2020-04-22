@@ -16,7 +16,8 @@ export class ImagesAccess {
     }),
     private readonly bucketName = process.env.IMAGES_S3_BUCKET,
     private readonly urlExpiration = process.env.SIGNED_URL_EXPIRATION,
-    private readonly imagesTable = process.env.IMAGES_TABLE) {
+    private readonly imagesTable = process.env.IMAGES_TABLE,
+    private readonly imageIdIndex = process.env.IMAGE_ID_INDEX) {
   }
   async createImage(image: Image): Promise<Image> {
     await this.docClient.put({
@@ -48,6 +49,39 @@ export class ImagesAccess {
     return items as Image[]
   }
 
+  async getImage(imageId: string): Promise<Image> {
+    const result = await this.docClient.query({
+        TableName : this.imagesTable,
+        IndexName : this.imageIdIndex,
+        KeyConditionExpression: 'imageId = :imageId',
+        ExpressionAttributeValues: {
+            ':imageId': imageId
+        }
+    }).promise()
+    if (result.Count !== 0) {
+      return result.Items[0] as Image
+    }
+  }
+
+  async deleteImage(image: Image) {
+    const params = {
+      TableName : this.imagesTable,
+      Key: {
+        boardId: image.boardId,
+        timestamp: image.timestamp
+      }
+    }
+    await this.docClient.delete(params).promise()
+  }
+
+  async getAllImages(): Promise<Image[]> {
+  
+    const result = await this.docClient.scan({
+      TableName: this.imagesTable,
+    }).promise()
+    const items = result.Items
+    return items as Image[]
+  }
 }
 
 function createDynamoDBClient() {

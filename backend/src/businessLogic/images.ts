@@ -16,7 +16,7 @@ export async function createImage(
 ): Promise<Image> {
 
   const imageId = uuid.v4()
-  const userId = 'user'//getUserId(jwtToken)
+  const userId = getUserId(jwtToken)
 
   return await imagesAccess.createImage({
     boardId: boardId,
@@ -35,4 +35,31 @@ export function getUploadUrl(imageId: string) {
 
 export async function getImages(boardId: string): Promise<Image[]> {
   return imagesAccess.getImages(boardId)
+}
+
+export async function getImage(imageId: string): Promise<Image> {
+  return imagesAccess.getImage(imageId)
+}
+
+export async function deleteImage(image: Image) {
+  return imagesAccess.deleteImage(image)
+}
+
+export async function getAllImages(): Promise<Image[]> {
+  return imagesAccess.getAllImages()
+}
+
+export async function pinImage(image: Image, jwtToken: string): Promise<Image> {
+  const userId = getUserId(jwtToken)
+  const imageId = uuid.v4()
+
+  return imagesAccess.createImage({
+    boardId: userId,
+    userId: image.userId,
+    timestamp: new Date().toISOString(),
+    imageId: imageId,
+    title: image.title,
+    imageUrl: image.imageUrl,
+    isPin: true
+  })
 }

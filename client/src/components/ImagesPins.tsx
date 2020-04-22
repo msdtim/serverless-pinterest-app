@@ -1,76 +1,53 @@
 import * as React from 'react'
 import { ImageModel } from '../types/ImageModel'
-import { getImages, deleteImage } from '../api/images-api'
-import { getBoard } from '../api/boards-api'
+import { getPins, deleteImage } from '../api/images-api'
 import { Card, Divider, Button, Icon, Image } from 'semantic-ui-react'
 import { History } from 'history'
 import Auth from '../auth/Auth'
 
-interface ImagesListProps {
+interface ImagesPinsProps {
   history: History
   auth: Auth
-  match: {
-    params: {
-      boardId: string
-    }
-  }
 }
 
-interface ImagesListState {
+interface ImagesPinsState {
   images: ImageModel[]
-  boardName: string
 }
 
-export class ImagesList extends React.PureComponent<
-  ImagesListProps,
-  ImagesListState
+export class ImagesPins extends React.PureComponent<
+  ImagesPinsProps,
+  ImagesPinsState
 > {
-  state: ImagesListState = {
-    images: [],
-    boardName: ''
+  state: ImagesPinsState = {
+    images: []
   }
 
-  handleCreateImage = () => {
-    this.props.history.push(`/images/${this.props.match.params.boardId}/create`)
-  }
-
-  onImageDelete = async (imageId: string) => {
+  onPinDelete = async (imageId: string) => {
     try {
       await deleteImage(imageId, this.props.auth.getIdToken())
       this.setState({
         images: this.state.images.filter(image => image.imageId != imageId)
       })
     } catch {
-      alert('Image deletion failed')
+      alert('Pin deletion failed')
     }
   }
 
   async componentDidMount() {
     try {
-      const board = await getBoard(this.props.match.params.boardId, this.props.auth.getIdToken())
-      const images = await getImages(this.props.match.params.boardId, this.props.auth.getIdToken())
+      const images = await getPins(this.props.auth.getIdToken())
       this.setState({
-        images,
-        boardName: board.name
+        images
       })
     } catch (e) {
-      alert(`Failed to fetch images for board : ${e.message}`)
+      alert(`Failed to fetch pins : ${e.message}`)
     }
   }
 
   render() {
     return (
       <div>
-        <h1>{this.state.boardName}</h1>
-
-        <Button
-          primary
-          size="huge"
-          className="add-button"
-          onClick={this.handleCreateImage}
-        >
-          Upload new image
-        </Button>
+        <h1>My Pins</h1>
 
         <Divider clearing />
 
@@ -83,10 +60,10 @@ export class ImagesList extends React.PureComponent<
                       icon
                       color="red"
                       size="small"
-                      onClick={() => this.onImageDelete(image.imageId)}
+                      onClick={() => this.onPinDelete(image.imageId)}
                       floated="right"
                     >
-                      <Icon name="delete" />
+                      UnPin
                 </Button>
               </Card.Header>
               <Card.Description>{image.timestamp}</Card.Description>

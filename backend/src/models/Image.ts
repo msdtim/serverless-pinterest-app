@@ -5,4 +5,5 @@ export interface Image {
   imageId: string
   title: string
   imageUrl: string
+  isPin?: boolean
 }

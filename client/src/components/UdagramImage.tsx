@@ -15,10 +15,10 @@ export class UdagramImage extends React.PureComponent<
 
   render() {
     return (
-      <Card fluid color="red">
+      <Card fluid color="blue">
         <Card.Content>
           <Card.Header>{this.props.image.title}
-          <Button
+            <Button
                   icon
                   color="red"
                   size="small"
@@ -26,7 +26,7 @@ export class UdagramImage extends React.PureComponent<
                   floated="right"
                 >
                   <Icon name="delete" />
-                </Button>
+            </Button>
           </Card.Header>
           <Card.Description>{this.props.image.timestamp}</Card.Description>
           {this.props.image.imageUrl && (
