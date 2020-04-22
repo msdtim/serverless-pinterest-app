@@ -35,6 +35,7 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
       body: 'Deleted'
     }
   } catch (err) {
+    console.log('Failed to delete', err)
     return {
       statusCode: 500,
       headers: {

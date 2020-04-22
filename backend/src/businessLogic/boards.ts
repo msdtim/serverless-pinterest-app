@@ -1,9 +1,11 @@
 import * as uuid from 'uuid'
 
 import { Board } from '../models/Board'
+import { Image } from '../models/Image'
 import { BoardAccess } from '../dataLayer/boardsAccess'
 import { CreateBoardRequest } from '../requests/CreateBoardRequest'
 import { getUserId } from '../auth/utils'
+import { getImages, deleteImage } from './images'
 
 const boardAccess = new BoardAccess()
 
@@ -57,6 +59,10 @@ export async function deleteBoard (
   jwtToken: string
 ): Promise<void> {
   const userId = getUserId(jwtToken)
+  const images = await getImages(boardId);
+  console.log('images', images)
+  images.map(async (image: Image) => deleteImage(image))
+
   await boardAccess.deleteBoard(
     userId,
     boardId
