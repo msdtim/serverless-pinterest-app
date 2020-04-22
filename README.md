@@ -8,6 +8,8 @@ The backend of app is a set of RESTful API built using serverless framework, the
 
 The frontend client is developed using REACT and Semantic UI. To interact with this app, you can clone this repo, under the `./client` folder, run `npm i` and `npm start`. It will start a local client on localhost:3000
 
+![Discover Page](images/Discover.png?raw=true "Image 5")
+
 ## Features
 
 ### Authentication
@@ -16,15 +18,23 @@ User need to login and properly authenticated to access the content of this appl
 
 Greeting page for new users:
 
-![Alt text](images/Greeting Page.png?raw=true "Image 1")
+![Greeting Page](images/Greeting%20Page.png?raw=true "Image 1")
 
 ### Content Ownership
 
 My Boards page stores user created data. User can create boards, upload images to different boards. User can delete individual image or a board along with the images belong to this board.
 
+![My Boards](images/My%20Boards.png?raw=true "Image 2")
+
+![Board](images/Board.png?raw=true "Image 3")
+
 ### Content Discovery
 
 User can browser other user's content in the Discover page. User can click the Pin button to save the images to My Pins page to view them later. User can unPin in the My Pins page.
+
+![Discover Page](images/Discover.png?raw=true "Image 4")
+
+![My Pins](images/My%20Pins.png?raw=true "Image 5")
 
 ## Next steps
 
